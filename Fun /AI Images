@@ -1,0 +1,9 @@
+{{ $seed := randInt 0 10000 }}
+{{ $url := (printf "https://image.pollinations.ai/prompt/%s.jpg?seed=%d" (urlquery (joinStr " " .CmdArgs)) $seed)}}
+{{$message := cembed 
+	"author" (sdict "name" (print "by " .User.String)) 
+	"description" (printf "Prompt: [ %s ]( %s)" (joinStr " " .CmdArgs)  $url ) 
+	"image" (sdict "url" $url)
+}}
+
+{{sendMessage nil $message}}
